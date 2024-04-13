@@ -16,7 +16,9 @@ target
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/tauri.code-snippets
 .DS_Store
 *.suo
 *.ntvs*
