@@ -1,0 +1,144 @@
+import * as React from "react";
+import { styled } from "styled-components";
+import { appWindow } from "@tauri-apps/api/window";
+import classNames from "classnames";
+import { CommonProps } from "../Types";
+import { AppIcon, MdiClose, MdiWindowMaximize, MdiWindowMinimize } from "../../utilities/app/Images";
+
+/**
+ * The props for the {@link WindowTitle} component.
+ */
+type WindowTitleProps = {
+    /** The title text to display on the window title. */
+    title: string | (() => string);
+    /** Occurs when the close button of the title bar was clicked. */
+    onClose?: () => Promise<boolean> | boolean;
+    /**
+     * Occurs when user interaction occurs within the component. E.g. the mouse is moved.
+     * This is for tracking the application idle status.
+     */
+    onUserInteraction?: () => void;
+    /** A  text color for window title text. */
+    textColor: string;
+    /** Background color for the window title bar. */
+    backColor: string;
+    closeTitle?: string;
+    minimizeTitle?: string;
+    maximizeTitle?: string;
+} & CommonProps;
+
+/**
+ * A custom window title component for the a Tauri application.
+ * NOTE: This is depended of the types and libraries used by this software.
+ * @param param0 The component props: {@link WindowTitleProps}.
+ * @returns A component.
+ */
+const WindowTitle = ({
+    className, //
+    title,
+    maximizeTitle = "Maximize",
+    minimizeTitle = "Minimize",
+    closeTitle = "Close",
+    onClose,
+    onUserInteraction,
+}: WindowTitleProps) => {
+    const minimizeClick = React.useCallback(() => {
+        void appWindow.minimize();
+    }, []);
+
+    const maximizeClick = React.useCallback(() => {
+        void appWindow.toggleMaximize();
+    }, []);
+
+    // Close the application if the onClose callback returned false.
+    const closeClick = React.useCallback(() => {
+        if (onClose) {
+            void Promise.resolve(onClose()).then(result => {
+                if (!result) {
+                    void appWindow.close();
+                }
+            });
+        }
+    }, [onClose]);
+
+    // Memoize the display title.
+    const displayTitle = React.useMemo(() => {
+        return typeof title === "string" ? title : title();
+    }, [title]);
+
+    return (
+        <div //
+            className={classNames(WindowTitle.name, className)}
+            onMouseDown={onUserInteraction}
+            onMouseUp={onUserInteraction}
+            onMouseMove={onUserInteraction}
+            onKeyDown={onUserInteraction}
+            onKeyUp={onUserInteraction}
+        >
+            <div className="titlebar-icon" id="titlebar-close">
+                <img src={AppIcon} alt="app icon" width={32} height={32} />
+            </div>
+            <div data-tauri-drag-region className="titlebar-title">
+                {displayTitle}
+            </div>
+            <div className="titlebar-buttonContainer">
+                <div className="titlebar-button" id="titlebar-minimize" onClick={minimizeClick} title={minimizeTitle}>
+                    <img src={MdiWindowMinimize} alt="minimize" />
+                </div>
+                <div className="titlebar-button" id="titlebar-maximize" onClick={maximizeClick} title={maximizeTitle}>
+                    <img src={MdiWindowMaximize} alt="maximize" />
+                </div>
+                <div className="titlebar-button" id="titlebar-close" onClick={closeClick} title={closeTitle}>
+                    <img src={MdiClose} alt="close" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const StyledTitle = styled(WindowTitle)`
+    height: 32px;
+    background: ${p => p.backColor};
+    color: ${p => p.textColor};
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    margin-left: 1px;
+    margin-top: 1px;
+    margin-right: 1px;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    .titlebar-title {
+        text-align: left;
+        margin: auto;
+        padding-left: 10px;
+        width: 100%;
+        font-weight: bolder;
+    }
+    .titlebar-buttonContainer {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .titlebar-icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background: ${p => p.textColor};
+    }
+    .titlebar-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+    }
+    .titlebar-button:hover {
+        background: ${p => p.textColor};
+    }
+`;
+
+export { StyledTitle };
