@@ -1,24 +1,32 @@
+// eslint-disable
 const yargs = require("yargs");
 const replace = require('replace-in-file');
 
 
 const options = yargs
     .option('copyright', { alias: "copyright", type: 'string', demandOption: true })
-    .option('appName', { alias: "ap",type: 'string', demandOption: true })
+    .option('appName', { alias: "app",type: 'string', demandOption: true })
     .parseSync();
 
-    const greeting = `Hello, ${options.copyright}!`;
+    const appNameSnakeCase = options.appName.split(/(?=[A-Z])/).join('_').toLowerCase();
 
     const replaceOptions = {
-      files: './vscode/tauri.code-snippets',
-      from: "Petteri Kautonen",
-      to: options.copyright,
+      files: ["../.vscode/tauri.code-snippets", 
+      "../src/App.tsx", 
+      "../src-tauri/tauri.conf.json", 
+      "../Cargo.lock", 
+      "../package.json", 
+      "../package-lock.json",
+      "../src-tauri/Cargo.toml",
+      "../src-tauri/Cargo.lock"],
+      from: ["#COPYRIGHT#", "TauriTemplate", "tauri_template"],
+      to: [options.copyright, options.appName, appNameSnakeCase],
     };
 
-    try {
-        const results = await replace(options)
-        console.log('Replacement results:', results);
-      }
-      catch (error) {
-        console.error('Error occurred:', error);
-      }
+    replace(replaceOptions)
+    .then(results => {
+      console.log('Replacement results:', results);
+    })
+    .catch(error => {
+      console.error('Error occurred:', error);
+    });
