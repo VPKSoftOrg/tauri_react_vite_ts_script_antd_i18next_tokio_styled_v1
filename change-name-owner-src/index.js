@@ -8,7 +8,7 @@ const options = yargs
     .option('appName', { alias: "app",type: 'string', demandOption: true })
     .parseSync();
 
-    const appNameSnakeCase = options.appName.split(/(?=[A-Z])/).join('_').toLowerCase();
+    const appNameSnakeCase = options.appName.match(/[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g).join("_").toLowerCase()
 
     const replaceOptions = {
       files: ["../.vscode/tauri.code-snippets", 
@@ -19,7 +19,7 @@ const options = yargs
       "../package-lock.json",
       "../src-tauri/Cargo.toml",
       "../src-tauri/Cargo.lock"],
-      from: ["#COPYRIGHT#", "TauriTemplate", "tauri_template"],
+      from: [/#COPYRIGHT#/g, /TauriTemplate/g, /tauri_template/g],
       to: [options.copyright, options.appName, appNameSnakeCase],
     };
 
