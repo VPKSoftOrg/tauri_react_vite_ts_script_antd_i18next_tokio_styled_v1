@@ -1,3 +1,4 @@
+//@ts-expect-error - React is required for JSX
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faDoorOpen, faCircleQuestion, faInfo } from "@fortawesome/free-solid-svg-icons";
