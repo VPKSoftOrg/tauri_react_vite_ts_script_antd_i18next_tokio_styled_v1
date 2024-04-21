@@ -45,7 +45,7 @@
         "bundle": {
             "active": true,
             "targets": "all",
-            "identifier": "tauri_react_vite_ts_script_antd_i18next",
+            "identifier": "TauriReactViteTypescriptAntdI18next",
             "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
         }
     }
