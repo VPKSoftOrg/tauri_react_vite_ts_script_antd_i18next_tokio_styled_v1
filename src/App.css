@@ -1,7 +1,34 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+#title {
+  height: 32px;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
+/* 
+The 32px is the custom title bar.
+The two 8 pixel values are margins. 
+TODO: Make dynamic!
+*/
+
+#root {
+  height: calc(100vh - 32px - 8px - 8px);
+  display: flex;
+  flex-direction: column;
 }
+
+/* See: https://css-tricks.com/body-border/ */
+#top, #bottom, #left, #right {
+	background: black;
+	position: fixed;
+	}
+	#left, #right {
+		top: 0; bottom: 0;
+		width: 1px;
+		}
+		#left { left: 0; }
+		#right { right: 0; }
+		
+	#top, #bottom {
+		left: 0; right: 0;
+		height: 1px;
+		}
+		#top { top: 0; }
+		#bottom { bottom: 0; }
