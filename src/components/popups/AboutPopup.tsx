@@ -71,7 +71,7 @@ const AboutPopup = ({
     }, []);
 
     // Open the https://tauri.app URL when the corresponding component is clicked.
-    const openVPKSoftUrl = React.useCallback(() => {
+    const openAppUrl = React.useCallback(() => {
         void open("https://tauri.app");
     }, []);
 
@@ -130,7 +130,7 @@ SOFTWARE."
                 `}
                 </div>
                 <div className="LogoImages">
-                    <img src={LogoImage} className="LogoImage" onClick={openVPKSoftUrl} />
+                    <img src={LogoImage} className="LogoImage" onClick={openAppUrl} />
 
                     <img src={GithubLogo} className="LogoImage" onClick={openGitHubUrl} />
                 </div>
