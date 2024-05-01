@@ -3,5 +3,14 @@
     "aboutMenu": "Tietoja",
     "exitMenu": "Lopeta",
     "helpMenu": "Apu",
-    "enterNameHolder": "Anna nimi..."
+    "enterNameHolder": "Anna nimi...",
+    "about": "Tietoja",
+    "copyright": "Tekijänoikeus",
+    "license": "Lisenssi",
+    "versionUpToDate": "Versio on ajantasalla",
+    "newVersionAvailable": "Uusi sovellusversio on saatavilla",
+    "updateButton": "Päivitä",
+    "manualDownload": "Manuaalinen lataus",
+    "buttonRefresh": "Virkistä",
+    "ok": "Ok"
 }

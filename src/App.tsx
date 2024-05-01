@@ -9,6 +9,7 @@ import { StyledTitle } from "./components/app/WindowTitle";
 import { useTranslate } from "./localization/Localization";
 import { AppMenu } from "./menu/AppMenu";
 import { MenuKeys, appMenuItems } from "./menu/MenuItems";
+import { AboutPopup } from "./components/popups/AboutPopup";
 
 const textColor = "white";
 const backColor = "#f05b41";
@@ -21,6 +22,8 @@ const backColor = "#f05b41";
 const App = () => {
     const [greetMsg, setGreetMsg] = useState("");
     const [name, setName] = useState("");
+    const [aboutPopupVisible, setAboutPopupVisible] = React.useState(false);
+
     const { translate } = useTranslate();
 
     const greet = React.useCallback(async () => {
@@ -40,6 +43,10 @@ const App = () => {
         [greet]
     );
 
+    const aboutPopupClose = React.useCallback(() => {
+        setAboutPopupVisible(false);
+    }, []);
+
     const onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     }, []);
@@ -53,6 +60,10 @@ const App = () => {
         switch (keyValue) {
             case "exitMenu": {
                 void exit(0);
+                break;
+            }
+            case "aboutMenu": {
+                setAboutPopupVisible(true);
                 break;
             }
             default: {
@@ -99,6 +110,11 @@ const App = () => {
 
                 <p>{greetMsg}</p>
             </div>
+            <AboutPopup //
+                visible={aboutPopupVisible}
+                onClose={aboutPopupClose}
+                textColor={textColor}
+            />
         </>
     );
 };
