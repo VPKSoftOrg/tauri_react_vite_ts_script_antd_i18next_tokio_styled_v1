@@ -19,7 +19,8 @@ const options = yargs
       "../package.json", 
       "../package-lock.json",
       "../src-tauri/Cargo.toml",
-      "../src-tauri/Cargo.lock"],
+      "../src-tauri/Cargo.lock",
+      "../src-tauri/src/config.rs"],
       from: [/#COPYRIGHT#/g, /TauriTemplate/g, /tauri_template/g, /0\.0\.0/g],
       to: [options.copyright, options.appName, appNameSnakeCase, options.initialVersion],
     };
