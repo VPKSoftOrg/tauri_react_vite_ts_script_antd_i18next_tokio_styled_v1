@@ -10,9 +10,13 @@ import { useTranslate } from "./localization/Localization";
 import { AppMenu } from "./menu/AppMenu";
 import { MenuKeys, appMenuItems } from "./menu/MenuItems";
 import { AboutPopup } from "./components/popups/AboutPopup";
+import { AppToolbar } from "./menu/AppToolbar";
+import { appToolbarItems } from "./menu/ToolbarItems";
+import { PreferencesPopup } from "./components/popups/PreferencesPopup";
+import { useSettings } from "./utilities/app/Settings";
 
 const textColor = "white";
-const backColor = "#f05b41";
+const backColor = "#199CF4";
 
 /**
  * Renders the main application component.
@@ -23,8 +27,16 @@ const App = () => {
     const [greetMsg, setGreetMsg] = useState("");
     const [name, setName] = useState("");
     const [aboutPopupVisible, setAboutPopupVisible] = React.useState(false);
+    const [preferencesVisible, setPreferencesVisible] = React.useState(false);
+    const [settings, settingsLoaded, updateSettings] = useSettings();
 
-    const { translate } = useTranslate();
+    const { translate, setLocale } = useTranslate();
+
+    React.useEffect(() => {
+        if (settings) {
+            void setLocale(settings.locale);
+        }
+    }, [setLocale, settings]);
 
     const greet = React.useCallback(async () => {
         // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -55,7 +67,7 @@ const App = () => {
         return appMenuItems(translate);
     }, [translate]);
 
-    const onMenuItemClick = React.useCallback((key: string) => {
+    const onMenuItemClick = React.useCallback((key: unknown) => {
         const keyValue = key as MenuKeys;
         switch (keyValue) {
             case "exitMenu": {
@@ -66,11 +78,23 @@ const App = () => {
                 setAboutPopupVisible(true);
                 break;
             }
+            case "preferencesMenu": {
+                setPreferencesVisible(true);
+                break;
+            }
             default: {
                 break;
             }
         }
     }, []);
+
+    const onPreferencesClose = React.useCallback(() => {
+        setPreferencesVisible(false);
+    }, []);
+
+    if (!settingsLoaded || settings === null) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
@@ -79,10 +103,17 @@ const App = () => {
                 onClose={onClose}
                 textColor={textColor}
                 backColor={backColor}
+                maximizeTitle={translate("maximize")}
+                minimizeTitle={translate("minimize")}
+                closeTitle={translate("close")}
             />
             <div className="AppMenu">
                 <AppMenu //
                     items={menuItems}
+                    onItemClick={onMenuItemClick}
+                />
+                <AppToolbar //
+                    toolBarItems={appToolbarItems(translate)}
                     onItemClick={onMenuItemClick}
                 />
             </div>
@@ -101,20 +132,33 @@ const App = () => {
                     </a>
                 </div>
 
-                <p>Click on the Tauri, Vite, and React logos to learn more.</p>
+                <div className="row">
+                    <p>Click on the Tauri, Vite, and React logos to learn more.</p>
+                </div>
 
                 <form className="row" onSubmit={onSubmit}>
                     <input id="greet-input" onChange={onChange} placeholder={translate("enterNameHolder")} />
                     <button type="submit">Greet</button>
                 </form>
 
-                <p>{greetMsg}</p>
+                <div className="row">
+                    <p>{greetMsg}</p>
+                </div>
             </div>
             <AboutPopup //
                 visible={aboutPopupVisible}
                 onClose={aboutPopupClose}
                 textColor={textColor}
             />
+            {updateSettings && (
+                <PreferencesPopup //
+                    visible={preferencesVisible}
+                    onClose={onPreferencesClose}
+                    updateSettings={updateSettings}
+                    settings={settings}
+                    translate={translate}
+                />
+            )}
         </>
     );
 };

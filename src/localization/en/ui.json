@@ -12,5 +12,10 @@
     "updateButton": "Update",
     "manualDownload": "Manual download",
     "buttonRefresh": "Refresh",
-    "ok": "Ok"
+    "ok": "Ok",
+    "maximize": "Maximize",
+    "minimize": "Minimize",
+    "close": "Close",
+    "language": "Language",
+    "cancel": "Cancel"
 }
