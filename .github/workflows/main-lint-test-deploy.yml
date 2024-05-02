@@ -1,7 +1,7 @@
 name: Lint & Test deployment package
 on:
   pull_request:
-    branches: [main,develop,release]
+    branches: [master,develop,release/**]
     paths-ignore:
       - '**.md'
   workflow_dispatch:
