@@ -4,23 +4,27 @@ import { initReactI18next, useTranslation } from "react-i18next";
 
 import uiEnglish from "../localization/en/ui.json";
 import messagesEnglish from "../localization/en/messages.json";
+import settingsEnglish from "../localization/en/settings.json";
 import uiFinnish from "../localization/fi/ui.json";
 import messagesFinnish from "../localization/fi/messages.json";
+import settingsFinnish from "../localization/fi/settings.json";
 
 const localizationResources = {
     en: {
         ui: uiEnglish,
         messages: messagesEnglish,
+        settings: settingsEnglish,
     },
     fi: {
         ui: uiFinnish,
         messages: messagesFinnish,
+        settings: settingsFinnish,
     },
 };
 
 export type Locales = keyof typeof localizationResources;
 export type LocalizationResources = keyof (typeof localizationResources)[Locales];
-export type LocalizationNames = keyof typeof uiEnglish | keyof typeof messagesEnglish;
+export type LocalizationNames = keyof typeof uiEnglish | keyof typeof messagesEnglish | keyof typeof settingsEnglish;
 const resourceArray = Object.keys(localizationResources["en"]);
 
 const defaultLanguage: Locales = "en";
@@ -52,7 +56,26 @@ export const useTranslate = () => {
         };
     }, [t]);
 
-    return { translate, i18n };
+    const setLocale = React.useCallback(
+        async (locale: Locales) => {
+            await i18n.changeLanguage(locale);
+        },
+        [i18n]
+    );
+
+    return { translate, i18n, setLocale };
 };
+
+// A type for a single locale with an English name.
+export type LocaleCodeName = {
+    code: Locales;
+    name: string;
+};
+
+// Create an array of the supported locales with their English names.
+export const currentLocales: LocaleCodeName[] = [
+    { code: "fi", name: "Finnish" },
+    { code: "en", name: "English" },
+];
 
 export * as i18next from "i18next";

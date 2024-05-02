@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import classNames from "classnames";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
 import { CommonProps } from "../components/Types";
+import { MenuKeys } from "./MenuItems";
 
 export type MenuItems = ItemType[];
 
@@ -21,7 +22,7 @@ export type AppMenuProps = {
      * @param key The action key from the menu item.
      * @returns {void}
      */
-    onItemClick: (key: string) => void;
+    onItemClick: (key: MenuKeys) => void;
 } & CommonProps;
 
 /**
@@ -37,7 +38,7 @@ const AppMenu = ({
 }: AppMenuProps) => {
     const onClick: MenuProps["onClick"] = React.useCallback(
         (e: MenuInfo) => {
-            const key = e.key;
+            const key = e.key as MenuKeys;
             onItemClick(key);
         },
         [onItemClick]

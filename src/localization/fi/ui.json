@@ -12,5 +12,10 @@
     "updateButton": "Päivitä",
     "manualDownload": "Manuaalinen lataus",
     "buttonRefresh": "Virkistä",
-    "ok": "Ok"
+    "ok": "Ok",
+    "maximize": "Maksimoi",
+    "minimize": "Minimoi",
+    "close": "Sulje",
+    "language": "Kieli",
+    "cancel": "Peruuta"
 }

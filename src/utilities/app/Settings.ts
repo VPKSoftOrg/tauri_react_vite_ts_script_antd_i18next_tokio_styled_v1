@@ -33,11 +33,11 @@ export type Settings = {
     /** The current application locale used by the i18next library. */
     locale: Locales;
     /** A value indicating whether the plugin-window-state should be used to remember the previous window state. */
-    saveWindowState: boolean;
+    save_window_state: boolean;
     /** A value indicating whether a load error occurred. */
     error: boolean;
     /** An error message if one occurred. */
-    errorMessage: string;
+    error_message: string;
 };
 
 /**
@@ -46,6 +46,11 @@ export type Settings = {
  * @returns {Promise<Settings>} A promise to the application settings.
  */
 const loadSettings = async () => {
+    const settingDeserialized = window.localStorage.getItem("settings") as string | null;
+    const localSettings = settingDeserialized === null ? null : (JSON.parse(settingDeserialized) as Settings);
+    if (localSettings !== null) {
+        return localSettings;
+    }
     const settings = (await invoke("load_settings")) as Settings;
     window.localStorage.setItem("settings", JSON.stringify(settings));
     return settings;
@@ -68,21 +73,20 @@ const saveSettings = async (settings: Settings) => {
  * @param {function} onErrorCallback - Callback function to notify of any errors.
  * @return {array} An array containing the current settings, a boolean indicating if the settings are loaded, a function to update the settings, and a function to reload the settings.
  */
-const useSettings = (onErrorCallback?: (error: Error | string | unknown) => void) => {
+const useSettings = (onErrorCallback?: (error: Error | string | unknown) => void): [Settings | null, boolean, (settings: Settings) => Promise<void>, () => Promise<void>] => {
     const [currentSettings, setCurrentSettings] = React.useState<Settings | null>(null);
 
-    const reloadSettings = React.useCallback(() => {
-        loadSettings()
-            .then(settings => {
-                if (settings.error) {
-                    onErrorCallback?.(new Error(settings.errorMessage));
-                    return;
-                }
-                setCurrentSettings(settings);
-            })
-            .catch(error => {
-                onErrorCallback?.(error);
-            });
+    const reloadSettings = React.useCallback(async () => {
+        try {
+            const settings = await loadSettings();
+            if (settings.error) {
+                onErrorCallback?.(new Error(settings.error_message));
+                return;
+            }
+            setCurrentSettings(settings);
+        } catch (error) {
+            onErrorCallback?.(error);
+        }
     }, [onErrorCallback]);
 
     const settingsLoaded = React.useMemo(() => {
@@ -90,16 +94,19 @@ const useSettings = (onErrorCallback?: (error: Error | string | unknown) => void
     }, [currentSettings]);
 
     const updateSettings = React.useCallback(
-        (settings: Settings) => {
-            void saveSettings(settings).catch(error => {
+        async (settings: Settings) => {
+            try {
+                await saveSettings(settings);
+                setCurrentSettings(settings);
+            } catch (error) {
                 onErrorCallback?.(error);
-            });
+            }
         },
         [onErrorCallback]
     );
 
     React.useEffect(() => {
-        reloadSettings();
+        void reloadSettings();
     }, [reloadSettings]);
 
     return [currentSettings, settingsLoaded, updateSettings, reloadSettings];
