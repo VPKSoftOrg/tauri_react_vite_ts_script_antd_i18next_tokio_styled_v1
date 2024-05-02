@@ -9,3 +9,13 @@ This template should help get you started developing with Tauri, React and Types
 ## Recommended IDE Setup 2
 
 - [RustRover](https://www.jetbrains.com/rust/)
+
+## To use this template
+After GitHub *Use this template*:
+1. CD into `change-name-owner-src`
+2. Run NPM install: `npm i`
+3. Run the replace script:
+   `node ./index.js --copyright [your company/your name] --appName [the application name] --initialVersion [0.0.1] --appUrl [the main url for the application web site] --sourceUrl [the source code url for the application source] --manualDownloadUri [an url where the application may be downloaded]`
+
+   Example:
+   `node ./index.js --copyright VPKSoft --MyNewApp --initialVersion 0.1.0 --appUrl https://www.vpksoft.net --sourceUrl https://github.com/VPKSoft/MyNewApp --manualDownloadUri https://github.com/VPKSoft/MyNewApp/releases/latest` 
