@@ -1,6 +1,6 @@
 # Tauri + React + Vite + Typescript + antd + i18next + Tokio
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+This template should help get you started developing with [Tauri](https://tauri.app), [React](https://react.dev), [Vite](https://vitejs.dev), [Typescript](https://www.typescriptlang.org), [antd](https://ant.design), [i18next](https://www.i18next.com) and [Tokio](https://tokio.rs).
 
 ## Recommended IDE Setup 1
 
