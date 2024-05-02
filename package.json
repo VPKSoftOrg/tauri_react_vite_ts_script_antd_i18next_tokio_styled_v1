@@ -16,13 +16,13 @@
         "@fortawesome/free-solid-svg-icons": "^6.5.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@tauri-apps/api": "^1",
-        "antd": "^5.16.5",
+        "antd": "^5.17.0",
         "classnames": "^2.5.1",
-        "i18next": "^23.11.2",
+        "i18next": "^23.11.3",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-i18next": "^14.1.1",
-        "styled-components": "^6.1.8"
+        "styled-components": "^6.1.9"
     },
     "devDependencies": {
         "@tauri-apps/cli": "^1.5.11",
