@@ -8,6 +8,7 @@ on:
   
 jobs:
   release:
+    environment: Release
     permissions:
       contents: write
     strategy:
