@@ -14,6 +14,7 @@ import { AppToolbar } from "./menu/AppToolbar";
 import { appToolbarItems } from "./menu/ToolbarItems";
 import { PreferencesPopup } from "./components/popups/PreferencesPopup";
 import { useSettings } from "./utilities/app/Settings";
+import { useWindowStateSaver } from "./hooks/UseWindowStateListener";
 
 const textColor = "white";
 const backColor = "#199CF4";
@@ -29,6 +30,15 @@ const App = () => {
     const [aboutPopupVisible, setAboutPopupVisible] = React.useState(false);
     const [preferencesVisible, setPreferencesVisible] = React.useState(false);
     const [settings, settingsLoaded, updateSettings] = useSettings();
+
+    const { setStateSaverEnabled, restoreState } = useWindowStateSaver(10_000);
+
+    React.useEffect(() => {
+        if (settingsLoaded && settings !== null) {
+            setStateSaverEnabled(settings.save_window_state);
+            void restoreState();
+        }
+    }, [restoreState, settingsLoaded, settings, setStateSaverEnabled]);
 
     const { translate, setLocale } = useTranslate();
 
