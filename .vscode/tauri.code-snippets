@@ -140,7 +140,7 @@
 			" * @param param0 The component props: {@link $TM_FILENAME_BASE$Props}.",
 			" * @returns A component.",
 			" */",
-			"const $TM_FILENAME_BASE = ({",
+			"const $TM_FILENAME_BASE$Component = ({",
 			"    className, //",
 			"}: $TM_FILENAME_BASE$Props) => {",
 			"",			
@@ -152,11 +152,11 @@
 			"        </$2>)",
 			"}",
 			"",
-			"const $TM_FILENAME_BASE$Styled = styled($TM_FILENAME_BASE)`",
+			"const $TM_FILENAME_BASE = styled($TM_FILENAME_BASE$Component)`",
 			"    // Add style(s) here",
 			"`;",
 			"",
-			"export { $TM_FILENAME_BASE$Styled };"
+			"export { $TM_FILENAME_BASE };"
 		],
 		"description": "React function component, Styled",
 	  },

@@ -3,7 +3,7 @@ import { Menu, MenuProps } from "antd";
 import { MenuInfo, MenuMode } from "rc-menu/lib/interface";
 import { styled } from "styled-components";
 import classNames from "classnames";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
+import { ItemType } from "antd/es/menu/hooks/useItems";
 import { CommonProps } from "../components/Types";
 import { MenuKeys } from "./MenuItems";
 
