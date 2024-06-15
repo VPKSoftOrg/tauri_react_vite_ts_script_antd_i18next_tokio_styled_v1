@@ -69,6 +69,7 @@ const useWindowEventListener = (event: TauriEvent, callback: () => void) => {
 const useWindowStateSaver = (intervalMs: number) => {
     const [stateSaverEnabled, setStateSaverEnabled] = React.useState(false);
     const intervalPassed = React.useRef<boolean>(false);
+    const windowEventOccurred = React.useRef<boolean>(false);
     const currentTime = React.useRef<Date>(new Date());
 
     const windowEventCallback = React.useCallback(() => {
@@ -76,6 +77,7 @@ const useWindowStateSaver = (intervalMs: number) => {
             void saveWindowState(StateFlags.ALL);
             intervalPassed.current = false;
         } else {
+            windowEventOccurred.current = true;
             currentTime.current = new Date();
         }
     }, []);
@@ -90,6 +92,13 @@ const useWindowStateSaver = (intervalMs: number) => {
             if (stateSaverEnabled && intervalPassed.current !== true && Date.now() - currentTime.current.getTime() > intervalMs) {
                 intervalPassed.current = true;
                 currentTime.current = new Date();
+            }
+
+            // Save the window state if the time interval has passed, the window event has occurred and the state saver is enabled.
+            if (stateSaverEnabled && windowEventOccurred.current === true) {
+                windowEventOccurred.current = false;
+                void saveWindowState(StateFlags.ALL);
+                intervalPassed.current = false;
             }
         }, 50);
         return () => clearInterval(interval);
