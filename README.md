@@ -23,4 +23,12 @@ After GitHub *Use this template*:
    `node ./index.js --copyright VPKSoft --appName MyNewApp --initialVersion 0.1.0 --appUrl https://www.vpksoft.net --sourceUrl https://github.com/VPKSoft/MyNewApp --manualDownloadUri https://github.com/VPKSoft/MyNewApp/releases/latest --shortDescription "An app for something"` 
 
 ## Features
-* Support for extendable application preferences and a popup for the mentioned purpose:  
+Support for extendable application preferences and a popup for the mentioned purpose:  
+![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/9b8e6ce6-0bdd-4516-a701-fdc2517ac3f6)
+
+Support for localization which is totally optional.
+
+The window title bar is custom. E.g. it looks the same with different operation systems:
+![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/138051a3-4640-4730-8fd3-791fc1bd13b6)
+
+Customizable tool bar and menu with React(antd) components.
