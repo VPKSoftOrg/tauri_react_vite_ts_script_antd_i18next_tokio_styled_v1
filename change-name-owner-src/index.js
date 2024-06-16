@@ -10,9 +10,12 @@ const options = yargs
     .option('appUrl', { alias: "appUrl",type: 'string', demandOption: true })
     .option('sourceUrl', { alias: "sourceUrl",type: 'string', demandOption: true })
     .option('manualDownloadUri', { alias: "manualDownloadUri",type: 'string', demandOption: true })
+    .option('shortDescription', { alias: "shortDescription",type: 'string', demandOption: true })
     .parseSync();
 
     const appNameSnakeCase = options.appName.match(/[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g).join("_").toLowerCase()
+
+    const appNameCamelCase = options.appName.match(/[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g).join("").charAt(0).toUpperCase() + options.appName.match(/[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g).join("").slice(1).toLowerCase()
 
     const replaceOptions = {
       files: [
@@ -33,7 +36,10 @@ const options = yargs
         /0\.0\.0/g, 
         /https:\/\/tauri.app/g,
         /https:\/\/github.com\/VPKSoftOrg\/tauri_react_vite_ts_script/g,
-        /https:\/\/github.com\/VPKSoftOrg\/tauri_react_vite_ts_script\/releases\/latest/g],
+        /https:\/\/github.com\/VPKSoftOrg\/tauri_react_vite_ts_script\/releases\/latest/g,
+        /authors = \["you"\]/g,
+        /description = "A Tauri App"/g,
+        /"identifier": "?.*"/g],
       to: [
         options.copyright, 
         options.appName, 
@@ -41,7 +47,10 @@ const options = yargs
         options.initialVersion, 
         options.appUrl,
         options.sourceUrl,
-        options.manualDownloadUri],
+        options.manualDownloadUri,
+        `authors = ["${options.copyright}"]`,
+        `description = "${options.shortDescription}"`,
+        `"identifier": "${appNameCamelCase}"`],
     };
 
     replace(replaceOptions)
