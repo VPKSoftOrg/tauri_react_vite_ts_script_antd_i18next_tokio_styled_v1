@@ -75,6 +75,7 @@ const useWindowStateSaver = (intervalMs: number) => {
     const windowEventCallback = React.useCallback(() => {
         windowEventOccurred.current = true;
         currentTime.current = new Date();
+        intervalPassed.current = false;
     }, []);
 
     useWindowEventListener(TauriEvent.WINDOW_RESIZED, windowEventCallback);
