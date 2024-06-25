@@ -3,6 +3,7 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { exit } from "@tauri-apps/api/process";
 import { styled } from "styled-components";
+import { Button, Form, Input } from "antd";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { StyledTitle } from "./components/app/WindowTitle";
@@ -15,6 +16,7 @@ import { appToolbarItems } from "./menu/ToolbarItems";
 import { PreferencesPopup } from "./components/popups/PreferencesPopup";
 import { useSettings } from "./utilities/app/Settings";
 import { useWindowStateSaver } from "./hooks/UseWindowStateListener";
+import { useAntdTheme, useAntdToken } from "./context/AntdThemeContext";
 
 const textColor = "white";
 const backColor = "#199CF4";
@@ -29,9 +31,10 @@ const App = () => {
     const [name, setName] = useState("");
     const [aboutPopupVisible, setAboutPopupVisible] = React.useState(false);
     const [preferencesVisible, setPreferencesVisible] = React.useState(false);
-    const [settings, settingsLoaded, updateSettings] = useSettings();
-
+    const [settings, settingsLoaded, updateSettings, reloadSettings] = useSettings();
+    const { token } = useAntdToken();
     const { setStateSaverEnabled, restoreState } = useWindowStateSaver(10_000);
+    const { setTheme, updateBackround } = useAntdTheme();
 
     React.useEffect(() => {
         if (settingsLoaded && settings !== null) {
@@ -43,34 +46,31 @@ const App = () => {
     const { translate, setLocale } = useTranslate();
 
     React.useEffect(() => {
-        if (settings) {
+        if (settings && setTheme) {
             void setLocale(settings.locale);
+            setTheme(settings.dark_mode ? "dark" : "light");
         }
-    }, [setLocale, settings]);
+    }, [setLocale, setTheme, settings]);
 
     const greet = React.useCallback(async () => {
         // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
         setGreetMsg(await invoke("greet", { name }));
     }, [name]);
 
+    React.useEffect(() => {
+        void greet();
+    }, [greet, name]);
+
     const onClose = React.useCallback(() => {
         return false;
     }, []);
-
-    const onSubmit = React.useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            void greet();
-        },
-        [greet]
-    );
 
     const aboutPopupClose = React.useCallback(() => {
         setAboutPopupVisible(false);
     }, []);
 
-    const onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
+    const onFinish = React.useCallback(async (e: { greetName: string }) => {
+        setName(e.greetName);
     }, []);
 
     const menuItems = React.useMemo(() => {
@@ -100,7 +100,23 @@ const App = () => {
 
     const onPreferencesClose = React.useCallback(() => {
         setPreferencesVisible(false);
-    }, []);
+        void reloadSettings().then(() => {
+            setTheme && setTheme(settings?.dark_mode ? "dark" : "light");
+        });
+    }, [reloadSettings, setTheme, settings?.dark_mode]);
+
+    // This effect occurs when the theme token has been changed and updates the
+    // root and body element colors to match to the new theme.
+    React.useEffect(() => {
+        updateBackround && updateBackround(token);
+    }, [token, updateBackround]);
+
+    const toggleDarkMode = React.useCallback(
+        (antdTheme: "light" | "dark") => {
+            setTheme && setTheme(antdTheme);
+        },
+        [setTheme]
+    );
 
     if (!settingsLoaded || settings === null) {
         return <div>Loading...</div>;
@@ -146,10 +162,29 @@ const App = () => {
                     <p>Click on the Tauri, Vite, and React logos to learn more.</p>
                 </div>
 
-                <form className="row" onSubmit={onSubmit}>
-                    <input id="greet-input" onChange={onChange} placeholder={translate("enterNameHolder")} />
-                    <button type="submit">Greet</button>
-                </form>
+                <Form className="row" onFinish={onFinish}>
+                    <Form.Item
+                        name="greetName"
+                        rules={[
+                            {
+                                required: true,
+                                message: translate("enterNameHolder"),
+                            },
+                        ]}
+                    >
+                        <Input id="greet-input" />
+                    </Form.Item>
+                    <Form.Item
+                        wrapperCol={{
+                            offset: 8,
+                            span: 16,
+                        }}
+                    >
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
 
                 <div className="row">
                     <p>{greetMsg}</p>
@@ -167,6 +202,7 @@ const App = () => {
                     updateSettings={updateSettings}
                     settings={settings}
                     translate={translate}
+                    toggleDarkMode={toggleDarkMode}
                 />
             )}
         </>

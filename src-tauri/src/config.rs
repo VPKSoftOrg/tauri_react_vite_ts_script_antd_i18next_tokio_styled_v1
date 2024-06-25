@@ -7,6 +7,8 @@ pub struct AppConfig {
     locale: String,
     /// A value indicating whether the plugin-window-state should be used to remember the previous window state.
     save_window_state: bool,
+    /// A value indicating whether to use dark mode with the application.
+    dark_mode: bool,
     /// A value indicating whether a load error occurred.
     error: bool,
     /// An error message if one occurred.
@@ -21,6 +23,7 @@ impl ::std::default::Default for AppConfig {
             save_window_state: false,
             error: false,
             error_message: "".to_string(),
+            dark_mode: false,
         }
     }
 }
@@ -38,6 +41,7 @@ pub fn get_app_config() -> AppConfig {
                 error: true,
                 locale: "en".to_string(),
                 save_window_state: false,
+                dark_mode: false,
             };
             result
         }

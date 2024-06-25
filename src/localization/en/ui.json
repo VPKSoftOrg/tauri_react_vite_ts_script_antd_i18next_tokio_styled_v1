@@ -17,5 +17,6 @@
     "minimize": "Minimize",
     "close": "Close",
     "language": "Language",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "darkMode": "Dark mode"
 }
