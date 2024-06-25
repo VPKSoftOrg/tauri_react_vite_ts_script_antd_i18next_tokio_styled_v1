@@ -39,6 +39,8 @@ type PreferencesPopupProps = {
     visible: boolean;
     /** The current program settings. */
     settings: Settings;
+    /** A call back to toggle the dark mode. */
+    toggleDarkMode: (antdTheme: "light" | "dark") => void;
     /** A call back to update the settings. */
     updateSettings: (settings: Settings) => Promise<void>;
     /** A call back to close the popup. */
@@ -56,6 +58,7 @@ const PreferencesPopupComponent = ({
     className, //
     visible,
     settings,
+    toggleDarkMode,
     onClose,
     updateSettings,
     translate,
@@ -83,6 +86,14 @@ const PreferencesPopupComponent = ({
             setSettingsInternal({ ...settingsInternal, save_window_state: e.target.checked === true });
         },
         [settingsInternal]
+    );
+
+    const setDarkMode = React.useCallback(
+        (e: CheckboxChangeEvent) => {
+            toggleDarkMode(e.target.checked === true ? "dark" : "light");
+            setSettingsInternal({ ...settingsInternal, dark_mode: e.target.checked === true });
+        },
+        [settingsInternal, toggleDarkMode]
     );
 
     // The OK button was clicked.
@@ -132,6 +143,17 @@ const PreferencesPopupComponent = ({
                                 <Checkbox //
                                     checked={settingsInternal.save_window_state}
                                     onChange={setSaveWindowState}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>{translate("darkMode")}</div>
+                            </td>
+                            <td>
+                                <Checkbox //
+                                    checked={settingsInternal.dark_mode}
+                                    onChange={setDarkMode}
                                 />
                             </td>
                         </tr>

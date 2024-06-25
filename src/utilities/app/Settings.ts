@@ -34,6 +34,8 @@ export type Settings = {
     locale: Locales;
     /** A value indicating whether the plugin-window-state should be used to remember the previous window state. */
     save_window_state: boolean;
+    /** A value indicating whether to use dark mode with the application. */
+    dark_mode: boolean;
     /** A value indicating whether a load error occurred. */
     error: boolean;
     /** An error message if one occurred. */
