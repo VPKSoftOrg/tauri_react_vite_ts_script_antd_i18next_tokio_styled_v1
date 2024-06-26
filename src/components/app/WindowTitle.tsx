@@ -3,7 +3,17 @@ import { styled } from "styled-components";
 import { appWindow } from "@tauri-apps/api/window";
 import classNames from "classnames";
 import { CommonProps } from "../Types";
-import { AppIcon, MdiClose, MdiWindowMaximize, MdiWindowMinimize } from "../../utilities/app/Images";
+import { AppIcon } from "../../utilities/app/Images";
+
+type TitleColorConfig = {
+    titleBackground: string;
+    textColor: string;
+    closeButtonColor: string;
+    minimizeButtonColor: string;
+    maximizeButtonColor: string;
+    iconBackground: string;
+    buttonHoverBackground: string;
+};
 
 /**
  * The props for the {@link WindowTitle} component.
@@ -11,6 +21,18 @@ import { AppIcon, MdiClose, MdiWindowMaximize, MdiWindowMinimize } from "../../u
 type WindowTitleProps = {
     /** The title text to display on the window title. */
     title: string | (() => string);
+    /** The text to display on the close button. */
+    closeTitle?: string;
+    /** The text to display on the minimize button. */
+    minimizeTitle?: string;
+    /** The text to display on the maximize button. */
+    maximizeTitle?: string;
+    /** A value indicating whether to use dark mode. */
+    darkMode?: boolean;
+    /** The color configuration for dark mode. */
+    colorConfigDark?: TitleColorConfig;
+    /** The color configuration for light mode. */
+    colorConfigLight?: TitleColorConfig;
     /** Occurs when the close button of the title bar was clicked. */
     onClose?: () => Promise<boolean> | boolean;
     /**
@@ -18,13 +40,6 @@ type WindowTitleProps = {
      * This is for tracking the application idle status.
      */
     onUserInteraction?: () => void;
-    /** A  text color for window title text. */
-    textColor: string;
-    /** Background color for the window title bar. */
-    backColor: string;
-    closeTitle?: string;
-    minimizeTitle?: string;
-    maximizeTitle?: string;
 } & CommonProps;
 
 /**
@@ -39,6 +54,9 @@ const WindowTitle = ({
     maximizeTitle = "Maximize",
     minimizeTitle = "Minimize",
     closeTitle = "Close",
+    darkMode,
+    colorConfigDark = titleColorConfigDark,
+    colorConfigLight = titleColorConfigLight,
     onClose,
     onUserInteraction,
 }: WindowTitleProps) => {
@@ -83,13 +101,13 @@ const WindowTitle = ({
             </div>
             <div className="titlebar-buttonContainer">
                 <div className="titlebar-button" id="titlebar-minimize" onClick={minimizeClick} title={minimizeTitle}>
-                    <img src={MdiWindowMinimize} alt="minimize" />
+                    {windowMinimize(darkMode ? colorConfigDark.minimizeButtonColor : colorConfigLight.minimizeButtonColor)}
                 </div>
                 <div className="titlebar-button" id="titlebar-maximize" onClick={maximizeClick} title={maximizeTitle}>
-                    <img src={MdiWindowMaximize} alt="maximize" />
+                    {windowMaximize(darkMode ? colorConfigDark.maximizeButtonColor : colorConfigLight.maximizeButtonColor)}
                 </div>
                 <div className="titlebar-button" id="titlebar-close" onClick={closeClick} title={closeTitle}>
-                    <img src={MdiClose} alt="close" />
+                    {window_close(darkMode ? colorConfigDark.closeButtonColor : colorConfigLight.closeButtonColor)}
                 </div>
             </div>
         </div>
@@ -98,8 +116,8 @@ const WindowTitle = ({
 
 const StyledTitle = styled(WindowTitle)`
     height: 32px;
-    background: ${p => p.backColor};
-    color: ${p => p.textColor};
+    background: ${p => (p.darkMode ? (p.colorConfigDark ?? titleColorConfigDark)?.titleBackground : (p.colorConfigLight ?? titleColorConfigLight)?.titleBackground)};
+    color: ${p => (p.darkMode ? (p.colorConfigDark ?? titleColorConfigDark)?.textColor : (p.colorConfigLight ?? titleColorConfigLight)?.textColor)};
     user-select: none;
     display: flex;
     flex-direction: row;
@@ -127,7 +145,7 @@ const StyledTitle = styled(WindowTitle)`
         align-items: center;
         width: 32px;
         height: 32px;
-        background: ${p => p.textColor};
+        background: ${p => (p.darkMode ? (p.colorConfigDark ?? titleColorConfigDark)?.iconBackground : (p.colorConfigLight ?? titleColorConfigLight)?.iconBackground)};
     }
     .titlebar-button {
         display: inline-flex;
@@ -137,8 +155,69 @@ const StyledTitle = styled(WindowTitle)`
         height: 32px;
     }
     .titlebar-button:hover {
-        background: ${p => p.textColor};
+        background: ${p => (p.darkMode ? (p.colorConfigDark ?? titleColorConfigDark)?.buttonHoverBackground : (p.colorConfigLight ?? titleColorConfigLight)?.buttonHoverBackground)};
+    }
+    svg .window_maximize {
+        stroke: white;
+        fill: white;
     }
 `;
 
-export { StyledTitle };
+const titleColorConfigDark: TitleColorConfig = {
+    titleBackground: "black",
+    textColor: "white",
+    closeButtonColor: "white",
+    minimizeButtonColor: "white",
+    maximizeButtonColor: "white",
+    iconBackground: "black",
+    buttonHoverBackground: "#02133a",
+};
+
+const titleColorConfigLight: TitleColorConfig = {
+    titleBackground: "rgb(230, 244, 255)",
+    textColor: "#00a3ff",
+    closeButtonColor: "#00a3ff",
+    minimizeButtonColor: "#00a3ff",
+    maximizeButtonColor: "#00a3ff",
+    iconBackground: "white",
+    buttonHoverBackground: "#cbe9fa",
+};
+
+const window_close = (fill: string, stroke?: string) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path //
+                fill={fill}
+                stroke={stroke ?? fill}
+                d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
+            />
+        </svg>
+    );
+};
+
+const windowMaximize = (fill: string, stroke?: string) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path //
+                fill={fill}
+                stroke={stroke ?? fill}
+                d="M4 4h16v16H4V4m2 4v10h12V8H6Z"
+            />
+        </svg>
+    );
+};
+
+const windowMinimize = (fill: string, stroke?: string) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path //
+                fill={fill}
+                stroke={stroke ?? fill}
+                d="M20 14H4v-4h16"
+            />
+        </svg>
+    );
+};
+
+export type { TitleColorConfig };
+export { StyledTitle, titleColorConfigDark, titleColorConfigLight };
