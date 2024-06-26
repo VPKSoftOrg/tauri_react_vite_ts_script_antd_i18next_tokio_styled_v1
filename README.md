@@ -24,11 +24,19 @@ After GitHub *Use this template*:
 
 ## Features
 Support for extendable application preferences and a popup for the mentioned purpose:  
-![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/9b8e6ce6-0bdd-4516-a701-fdc2517ac3f6)
+![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/0dc7b4e9-401e-4ed5-ab8d-4ac21ec38e6a) ![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/b13b78a1-970e-491e-ac61-b58881bf6d30)
+
+
+
 
 Support for localization which is totally optional.
 
 The window title bar is custom. E.g. it looks the same with different operation systems:
-![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/138051a3-4640-4730-8fd3-791fc1bd13b6)
+![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/dc99d8b0-5796-40f0-aa52-baf913f97f8a)
+
+Also with dark mode support:
+![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/565d346b-4272-4beb-8933-b4d1f8e45d20)
+
+
 
 Customizable tool bar and menu with React(antd) components.
