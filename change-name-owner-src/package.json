@@ -10,7 +10,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "replace-in-file": "^8.0.0",
+        "replace-in-file": "^8.0.1",
         "yargs": "^17.7.2"
     }
 }
