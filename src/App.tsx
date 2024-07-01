@@ -52,7 +52,9 @@ const App = () => {
 
     const greet = React.useCallback(async () => {
         // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-        setGreetMsg(await invoke("greet", { name }));
+        if (name.trim().length > 0) {
+            setGreetMsg(await invoke("greet", { name }));
+        }
     }, [name]);
 
     React.useEffect(() => {
