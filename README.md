@@ -2,7 +2,7 @@
 
 This template should help get you started developing with [Tauri](https://tauri.app), [React](https://react.dev), [Vite](https://vitejs.dev), [Typescript](https://www.typescriptlang.org), [antd](https://ant.design), [i18next](https://www.i18next.com), [Styled Components](https://styled-components.com) and [Tokio](https://tokio.rs).
 
-The template is for [Tauri version 1+](v1.tauri.app/), for the [Version 2 template here](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled_v2).
+The template is for [Tauri version 1+](https://v1.tauri.app/), for the [Version 2 template here](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled_v2).
 
 ## Recommended IDE Setup 1
 
