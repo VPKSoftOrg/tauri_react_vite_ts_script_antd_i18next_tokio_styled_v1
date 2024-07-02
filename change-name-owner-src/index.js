@@ -1,10 +1,8 @@
 // eslint-disable
-const yargs = require("yargs");
-const replace = require('replace-in-file');
+import yargs from 'yargs';
+import { replaceInFile } from 'replace-in-file';
 
-
-const options = yargs
-    .option('copyright', { alias: "copyright", type: 'string', demandOption: true })
+const options = yargs(process.argv.splice(2)).option('copyright', { alias: "copyright", type: 'string', demandOption: true })
     .option('appName', { alias: "app",type: 'string', demandOption: true })
     .option('initialVersion', { alias: "initialVersion",type: 'string', demandOption: true })
     .option('appUrl', { alias: "appUrl",type: 'string', demandOption: true })
@@ -53,7 +51,7 @@ const options = yargs
         `"identifier": "${appNameCamelCase}"`],
     };
 
-    replace(replaceOptions)
+    replaceInFile(replaceOptions)
     .then(results => {
       console.log('Replacement results:', results);
     })
