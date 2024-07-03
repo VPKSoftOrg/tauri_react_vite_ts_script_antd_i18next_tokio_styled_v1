@@ -9,16 +9,14 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { StyledTitle } from "./components/app/WindowTitle";
 import { useTranslate } from "./localization/Localization";
-import { AppMenu } from "./menu/AppMenu";
 import { MenuKeys, appMenuItems } from "./menu/MenuItems";
 import { AboutPopup } from "./components/popups/AboutPopup";
-import { AppToolbar } from "./menu/AppToolbar";
-import { appToolbarItems } from "./menu/ToolbarItems";
 import { PreferencesPopup } from "./components/popups/PreferencesPopup";
 import { useSettings } from "./utilities/app/Settings";
 import { useWindowStateSaver } from "./hooks/UseWindowStateListener";
 import { useAntdTheme, useAntdToken } from "./context/AntdThemeContext";
 import { CommonProps } from "./components/Types";
+import { AppMenuToolbar } from "./menu/AppMenuToolbar";
 
 type AppProps = CommonProps;
 
@@ -138,16 +136,10 @@ const App = ({ className }: AppProps) => {
                 minimizeTitle={translate("minimize")}
                 closeTitle={translate("close")}
             />
-            <div className="AppMenu">
-                <AppMenu //
-                    items={menuItems}
-                    onItemClick={onMenuItemClick}
-                />
-                <AppToolbar //
-                    toolBarItems={appToolbarItems(translate)}
-                    onItemClick={onMenuItemClick}
-                />
-            </div>
+            <AppMenuToolbar //
+                menuItems={menuItems}
+                onItemClick={onMenuItemClick}
+            />
             <div //
                 className={classNames(App.name, className)}
             >
@@ -220,12 +212,6 @@ const SyledApp = styled(App)`
     height: 100%;
     width: 100%;
     display: contents;
-    .AppMenu {
-        display: flex;
-        flex-direction: column;
-        min-height: 0px;
-        margin-bottom: 10px;
-    }
 `;
 
 export { SyledApp as App };
