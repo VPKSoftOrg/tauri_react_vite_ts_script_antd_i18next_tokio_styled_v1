@@ -35,6 +35,7 @@ module.exports = {
         "curly": 2,
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
+        "react/jsx-curly-brace-presence": ["warn", { "props": "never", "children": "never" }],
         "@typescript-eslint/no-floating-promises": "warn",
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-unused-vars": "warn",

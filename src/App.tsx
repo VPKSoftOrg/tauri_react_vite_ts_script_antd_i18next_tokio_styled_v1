@@ -4,6 +4,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { exit } from "@tauri-apps/api/process";
 import { styled } from "styled-components";
 import { Button, Form, Input } from "antd";
+import classNames from "classnames";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { StyledTitle } from "./components/app/WindowTitle";
@@ -17,13 +18,16 @@ import { PreferencesPopup } from "./components/popups/PreferencesPopup";
 import { useSettings } from "./utilities/app/Settings";
 import { useWindowStateSaver } from "./hooks/UseWindowStateListener";
 import { useAntdTheme, useAntdToken } from "./context/AntdThemeContext";
+import { CommonProps } from "./components/Types";
+
+type AppProps = CommonProps;
 
 /**
  * Renders the main application component.
  *
  * @return {JSX.Element} The rendered application component.
  */
-const App = () => {
+const App = ({ className }: AppProps) => {
     const [greetMsg, setGreetMsg] = useState("");
     const [name, setName] = useState("");
     const [aboutPopupVisible, setAboutPopupVisible] = React.useState(false);
@@ -127,7 +131,7 @@ const App = () => {
     return (
         <>
             <StyledTitle //
-                title={"TauriTemplate"}
+                title="TauriTemplate"
                 onClose={onClose}
                 darkMode={previewDarkMode ?? settings.dark_mode ?? false}
                 maximizeTitle={translate("maximize")}
@@ -144,7 +148,9 @@ const App = () => {
                     onItemClick={onMenuItemClick}
                 />
             </div>
-            <div>
+            <div //
+                className={classNames(App.name, className)}
+            >
                 <h1>Welcome to Tauri!</h1>
 
                 <div className="row">
