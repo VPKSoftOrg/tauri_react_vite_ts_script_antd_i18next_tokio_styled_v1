@@ -24,6 +24,10 @@ After GitHub *Use this template*:
    
    `node ./index.js --copyright VPKSoft --appName MyNewApp --initialVersion 0.1.0 --appUrl https://www.vpksoft.net --sourceUrl https://github.com/VPKSoft/MyNewApp --manualDownloadUri https://github.com/VPKSoft/MyNewApp/releases/latest --shortDescription "An app for something"` 
 
+## Debug instructions to RustRover or Visual Studio Code
+* [Visual Studio Code](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled_v1/wiki/Visual-Studio-Code:-Run-and-Debug)
+* [RustRover](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled_v1/wiki/RustRover:-Run-and-debug)
+
 ## Features
 Support for extendable application preferences and a popup for the mentioned purpose:  
 ![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/0dc7b4e9-401e-4ed5-ab8d-4ac21ec38e6a) ![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/b13b78a1-970e-491e-ac61-b58881bf6d30)
