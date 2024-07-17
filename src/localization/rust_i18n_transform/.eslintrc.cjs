@@ -2,14 +2,13 @@
 module.exports = {
     extends: [
         "eslint:recommended",
-        "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
         "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
         "plugin:prettier/recommended", // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors.
         "plugin:unicorn/recommended",
         "plugin:import/warnings",
     ],
     parser: "@typescript-eslint/parser",
-    ignorePatterns: [".eslintrc.cjs", "src/localization/rust_i18n_transform"],
+    ignorePatterns: [".eslintrc.cjs"],
     parserOptions: {
         sourceType: "module",
         ecmaVersion: 2_020,
@@ -18,12 +17,7 @@ module.exports = {
         },
         project: ['tsconfig.json'],
     },
-    plugins: ["eslint-plugin-jsdoc", "eslint-plugin-unicorn", "react", "@typescript-eslint", "prettier", "react-hooks", "prefer-arrow"],
-    settings: {
-        react: {
-            version: "detect", // Tells eslint-plugin-react to automatically detect the version of React to use
-        },
-    },
+    plugins: ["eslint-plugin-jsdoc", "eslint-plugin-unicorn", "@typescript-eslint", "prettier", "prefer-arrow"],
     // Fine tune rules
     rules: {
         "@typescript-eslint/no-var-requires": 0,
@@ -35,14 +29,11 @@ module.exports = {
         "curly": 2,
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
-        "react/jsx-curly-brace-presence": ["warn", { "props": "never", "children": "never" }],
         "@typescript-eslint/no-floating-promises": "warn",
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-unused-vars": "warn",
+        "no-console": "off",
         "unicorn/prevent-abbreviations": "off",
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "react/jsx-no-bind": "error",
         "unicorn/no-null": "off",
         "import/order": "warn",
         "unicorn/numeric-separators-style": ["error", { number: { minimumDigits: 0, groupLength: 3 } }],

@@ -37,6 +37,8 @@ Support for extendable application preferences and a popup for the mentioned pur
 
 Support for localization which is totally optional.
 
+For backend localization see the [additional readme](./src/localization/rust_i18n_transform/README.md).
+
 The window title bar is custom. E.g. it looks the same with different operation systems:
 ![image](https://github.com/VPKSoftOrg/tauri_react_vite_ts_script_antd_i18next_tokio_styled/assets/40712699/dc99d8b0-5796-40f0-aa52-baf913f97f8a)
 
