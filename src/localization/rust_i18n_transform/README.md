@@ -18,7 +18,13 @@ extern crate rust_i18n;
 i18n!();   
 ```
 
-2. Sample usage
+2. Use the macro in the respective file
+
+```rust
+use rust_i18n::t;
+```
+
+3. Sample usage
 
 ```rust
 fn my_error(file_name: &str) -> String {
