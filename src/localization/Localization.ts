@@ -38,7 +38,7 @@ void i18next.use(initReactI18next).init({
 
 /**
  * A localization function returned by the {@link useLocalize} hook.
- * @param {string} entryName The name of the localization key.
+ * @param {string} entryName The localization key.
  * @param {string?} defaultValue A default value if a localization key is not found.
  * @param {object?} params The interpolation parameters for the localization function. E.g. `{ interpolationName: interpolationValue }`.
  * @param {boolean?} escapeValue A value indicating whether the special characters should be escaped with interpolation. The default value is `true`.

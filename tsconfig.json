@@ -21,5 +21,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
+  "exclude": ["src/localization/rust_i18n_transform"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

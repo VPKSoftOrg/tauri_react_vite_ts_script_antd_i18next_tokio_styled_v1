@@ -11,6 +11,14 @@
         // "args": [
         //   "run dev"
         // ]
+        "problemMatcher": {
+          "base": "$tsc-watch",
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "VITE v",
+            "endsPattern": "http://localhost:1420/" // This must match the port in `vite.config.ts` and/or `src-tauri/tauri.conf.json` ?
+          }
+        }
       },
       {
         "label": "ui:build",
