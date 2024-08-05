@@ -104,19 +104,19 @@ const App = ({ className }: AppProps) => {
         setPreferencesVisible(false);
         void reloadSettings().then(() => {
             setPreviewDarkMode(null);
-            setTheme && setTheme(settings?.dark_mode ? "dark" : "light");
+            setTheme?.(settings?.dark_mode ? "dark" : "light");
         });
     }, [reloadSettings, setTheme, settings?.dark_mode]);
 
     // This effect occurs when the theme token has been changed and updates the
     // root and body element colors to match to the new theme.
     React.useEffect(() => {
-        updateBackround && updateBackround(token);
+        updateBackround?.(token);
     }, [token, updateBackround]);
 
     const toggleDarkMode = React.useCallback(
         (antdTheme: "light" | "dark") => {
-            setTheme && setTheme(antdTheme);
+            setTheme?.(antdTheme);
             setPreviewDarkMode(antdTheme === "dark");
         },
         [setTheme]
