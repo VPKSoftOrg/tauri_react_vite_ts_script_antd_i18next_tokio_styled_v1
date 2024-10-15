@@ -48,13 +48,13 @@ export type Settings = {
  * @returns {Promise<Settings>} A promise to the application settings.
  */
 const loadSettings = async () => {
-    const settingDeserialized = window.localStorage.getItem("settings") as string | null;
+    const settingDeserialized = globalThis.localStorage.getItem("settings") as string | null;
     const localSettings = settingDeserialized === null ? null : (JSON.parse(settingDeserialized) as Settings);
     if (localSettings !== null) {
         return localSettings;
     }
     const settings = (await invoke("load_settings")) as Settings;
-    window.localStorage.setItem("settings", JSON.stringify(settings));
+    globalThis.localStorage.setItem("settings", JSON.stringify(settings));
     return settings;
 };
 
@@ -66,7 +66,7 @@ const loadSettings = async () => {
  */
 const saveSettings = async (settings: Settings) => {
     await invoke("save_settings", { config: settings });
-    window.localStorage.setItem("settings", JSON.stringify(settings));
+    globalThis.localStorage.setItem("settings", JSON.stringify(settings));
 };
 
 /**
