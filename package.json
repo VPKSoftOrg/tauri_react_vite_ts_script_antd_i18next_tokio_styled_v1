@@ -13,12 +13,13 @@
         "lint": "eslint --max-warnings=0 --config ./.eslintrc.cjs --ext .tsx,.ts ./src/"
     },
     "dependencies": {
-        "@fortawesome/free-solid-svg-icons": "^6.5.2",
+        "@fortawesome/fontawesome-svg-core": "^6.7.1",
+        "@fortawesome/free-solid-svg-icons": "^6.7.1",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@tauri-apps/api": "^1",
-        "antd": "^5.22.1",
+        "antd": "^5.22.2",
         "classnames": "^2.5.1",
-        "i18next": "^23.16.5",
+        "i18next": "^24.0.2",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-i18next": "^15.1.1",
