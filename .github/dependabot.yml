@@ -24,6 +24,9 @@ updates:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
+    ignore:
+    - dependency-name: "react*"
+      versions: [ ">=19.0.0" ]           
 
   - package-ecosystem: "cargo" # See documentation for possible values
     directory: "/src-tauri" # Location of package manifests
