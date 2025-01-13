@@ -17,13 +17,13 @@
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@tauri-apps/api": "^1",
-        "antd": "^5.22.5",
+        "antd": "^5.23.0",
         "classnames": "^2.5.1",
-        "i18next": "^24.2.0",
+        "i18next": "^24.2.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "react-i18next": "^15.2.0",
-        "styled-components": "^6.1.13",
+        "react-i18next": "^15.4.0",
+        "styled-components": "^6.1.14",
         "tauri-plugin-window-state-api": "github:tauri-apps/tauri-plugin-window-state#v1"
     },
     "devDependencies": {
