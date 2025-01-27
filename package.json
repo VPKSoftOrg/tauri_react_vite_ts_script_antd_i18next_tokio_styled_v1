@@ -19,7 +19,7 @@
         "@tauri-apps/api": "^1",
         "antd": "^5.23.2",
         "classnames": "^2.5.1",
-        "i18next": "^24.2.1",
+        "i18next": "^24.2.2",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-i18next": "^15.4.0",
